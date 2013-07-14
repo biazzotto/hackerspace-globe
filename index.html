@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>WebGL Globe</title>
+
     <script src="jquery-1.7.1.min.js"></script>
     <script src="globe/third-party/Three/ThreeWebGL.js"></script>
     <script src="globe/third-party/Three/ThreeExtras.js"></script>
@@ -9,42 +10,8 @@
     <script src="globe/third-party/Three/Detector.js"></script>
     <script src="globe/third-party/Tween.js"></script>
     <script src="globe/globe.js"></script>
-    <script>
-      $(function() {
-        
-        if (!Detector.webgl) {
-          Detector.addGetWebGLMessage();
-          return;
-        }
+    <script src="globe.js"></script>
 
-        var openColor = new THREE.Color(0x00ff00);
-        var closedColor = new THREE.Color(0xff0000);
-        function colorize(open) {
-          return open ? openColor : closedColor;
-        };
-
-        var globe = new DAT.Globe($('#globeContainer').get(0), colorize);
-        TWEEN.start();
-        new TWEEN.Tween(globe).to({time: 0},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
-        globe.animate();
-
-        $.getJSON('http://chasmcity.sonologic.nl/spacestatusdirectory.php', function(urls) {
-          for (var name in urls) {
-            $.getJSON(urls[name], function(data) {
-              if (data.lat !== undefined && data.lon !== undefined) {
-                console.log('Space:', data.space, 'open:', data.open, 'lat/lon:', data.lat, data.lon);
-                globe.addData([parseFloat(data.lat), parseFloat(data.lon), 0.4, data.open], {format: 'legend'});
-                globe.createPoints();    
-              } else {
-                console.log('Space:', data.space, '[No lat/lon values]'); // TODO: Geocode address
-              }
-            });
-          }
-        });
-
-        // TODO: Figure out the source of the errors in the console.
-      });    
-    </script>
     <style type="text/css">
       html {
         height: 100%;
