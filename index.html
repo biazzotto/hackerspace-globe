@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>WebGL Globe</title>
+
     <script src="jquery-1.7.1.min.js"></script>
     <script src="globe/third-party/Three/ThreeWebGL.js"></script>
     <script src="globe/third-party/Three/ThreeExtras.js"></script>
@@ -9,43 +10,8 @@
     <script src="globe/third-party/Three/Detector.js"></script>
     <script src="globe/third-party/Tween.js"></script>
     <script src="globe/globe.js"></script>
-    <script>
-      $(function() {
-        
-        if (!Detector.webgl) {
-          Detector.addGetWebGLMessage();
-          return;
-        }
+    <script src="globe.js"></script>
 
-        var openColor = new THREE.Color(0x00ff00);
-        var closedColor = new THREE.Color(0xff0000);
-        function colorize(open) {
-          return open ? openColor : closedColor;
-        };
-
-        var globe = new DAT.Globe($('#globeContainer').get(0), colorize);
-        TWEEN.start();
-        new TWEEN.Tween(globe).to({time: 0},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
-        globe.animate();
-
-        $.getJSON('http://openspace.slopjong.de/directory.json', function(urls) {
-          for (var name in urls) {
-            $.getJSON(urls[name], function(data) {
-              // TODO: Gracefully handle GET errors
-              if (data.lat !== undefined && data.lon !== undefined) {
-                console.log('Space:', data.space, 'open:', data.open, 'lat/lon:', data.lat, data.lon);
-                globe.addData([parseFloat(data.lat), parseFloat(data.lon), 0.2, data.open], {format: 'legend'});
-                globe.createPoints();    
-              } else {
-                console.log('Space:', data.space, '[No lat/lon values]'); // TODO: Geocode address
-              }
-            });
-          }
-        });
-
-        // TODO: Figure out the source of the errors in the console.
-      });    
-    </script>
     <style type="text/css">
       html {
         height: 100%;
@@ -95,9 +61,21 @@
     </div>
 
     <div id="blurbRight">
-      <p>Hacked up with <a href="http://hackerspaces.nl/spaceapi/" target="_blank">The HackerSpace Status API</a> and <a href="http://code.google.com/p/webgl-globe/" target="_blank">The WebGL Globe</a>.</p>
-      <p><a href="https://github.com/joewalnes/hackerspace-globe" target="_blank">Code on GitHub</a>.</p>
-      <p>By <a href="http://twitter.com/joewalnes" target="_blank">@joewalnes</a> (with inspiration from <a href="http://twitter.com/toba" target="_blank">@toba</a> and <a href="http://twitter.com/osi" target="_blank">@osi</a>).</p>
+
+      <p>
+          Hacked up with <a href="http://spaceapi.net" target="_blank">The HackerSpace Status API</a> and <a href="http://code.google.com/p/webgl-globe/" target="_blank">The WebGL Globe</a>.
+      </p>
+
+      <p>
+          <a href="https://github.com/spaceapi/hackerspace-globe" target="_blank">Code on GitHub</a>.
+      </p>
+
+      <p>
+          By <a href="http://twitter.com/joewalnes" target="_blank">@joewalnes</a>
+          (with inspiration from <a href="http://twitter.com/toba" target="_blank">@toba</a> and <a href="http://twitter.com/osi" target="_blank">@osi</a>
+          and contribution of <a href="http://twitter.com/rohieb" target="_blank">@rohieb</a> and <a href="http://twitter.com/slopjong" target="_blank">@slopjong</a>).
+      </p>
+
     </div>
 
   </body>
