@@ -19,8 +19,8 @@ $(function() {
 
     // TODO: have a look at these questions.
     //
-    //          1) does the Globe instance support multiple calls of createPoints()?
-    //          2) is it fine that different spaceapi versions are handled asynchronously?
+    //          1) does the Globe instance support multiple calls of createPoints()? => it seems so
+    //          2) is it fine that different spaceapi versions are handled asynchronously? => it seems so
 
 
     $.getJSON('http://spaceapi.net/directory.json', {api: "<0.13"}, function(urls) {
@@ -28,8 +28,9 @@ $(function() {
             $.getJSON(urls[name], function(data) {
                 if ( data.hasOwnProperty("lat") && data.hasOwnProperty("lon") && data.hasOwnProperty("open") ) {
                     var open = data.open || false;
-                    globe.addData([parseFloat(data.lat), parseFloat(data.lon), 0.4, open], {format: 'legend'});
+                    globe.addData([parseFloat(data.lat), parseFloat(data.lon), 0.1, open], {format: 'legend'});
                     globe.createPoints();
+
                 }
             });
         }
@@ -40,7 +41,7 @@ $(function() {
             $.getJSON(urls[name], function(data) {
                 if ( data.hasOwnProperty("state") && data.state.hasOwnProperty("open") && data.hasOwnProperty("location")
                     && data.location.hasOwnProperty("lon") && data.location.hasOwnProperty("lat") ) {
-                    globe.addData([parseFloat(data.location.lat), parseFloat(data.location.lon), 0.4, data.state.open], {format: 'legend'});
+                    globe.addData([parseFloat(data.location.lat), parseFloat(data.location.lon), 0.1, data.state.open], {format: 'legend'});
                     globe.createPoints();
                 }
             });
