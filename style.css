@@ -1,0 +1,35 @@
+html {
+    height: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background: #u url(globe/loading.gif) center center no-repeat;
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    height: 100%;
+}
+a {
+    color: #aa6;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+#blurbLeft, #blurbRight {
+    position: absolute;
+    top: 20px;
+    width: 250px;
+    padding: 0;
+}
+#blurbLeft {
+    left: 20px;
+}
+#blurbRight {
+    right: 20px;
+}
+#blurbLeft h2 {
+    margin-top: 0;
+}
