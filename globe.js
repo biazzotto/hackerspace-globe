@@ -20,30 +20,30 @@ $(function() {
     // TODO: have a look at these questions.
     //
     //          1) does the Globe instance support multiple calls of createPoints()? => it seems so
-    //          2) is it fine that different spaceapi versions are handled asynchronously? => it seems so
 
 
     $.getJSON('https://directory.spaceapi.net/', function(urls) {
         for (var name in urls) {
             $.getJSON(urls[name], function(data) {
+                var lat = 0;
+                var lon = 0;
+                var open = false;
                 if ( data.hasOwnProperty("lat") && data.hasOwnProperty("lon") && data.hasOwnProperty("open") ) {
-                    var open = data.open || false;
-                    globe.addData([parseFloat(data.lat), parseFloat(data.lon), 0.1, open], {format: 'legend'});
-                    globe.createPoints();
-
-                }
-            });
-        }
-    });
-
-    $.getJSON('http://spaceapi.net/directory.json', {api: ">0.12"}, function(urls) {
-        for (var name in urls) {
-            $.getJSON(urls[name], function(data) {
-                if ( data.hasOwnProperty("state") && data.state.hasOwnProperty("open") && data.hasOwnProperty("location")
+                    // old v0.12 and before
+                    lat = data.lat;
+                    lon = data.lon;
+                    open = data.open || false;
+                } else if ( data.hasOwnProperty("state") && data.state.hasOwnProperty("open") && data.hasOwnProperty("location")
                     && data.location.hasOwnProperty("lon") && data.location.hasOwnProperty("lat") ) {
-                    globe.addData([parseFloat(data.location.lat), parseFloat(data.location.lon), 0.1, data.state.open], {format: 'legend'});
-                    globe.createPoints();
+
+                    // v0.13 and later
+                    lat = data.location.lat;
+                    lon = data.location.lon;
+                    open = data.state.open || false;
                 }
+
+                globe.addData([parseFloat(lat), parseFloat(lon), 0.1, open], {format: 'legend'});
+                globe.createPoints();
             });
         }
     });
