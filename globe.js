@@ -23,7 +23,7 @@ $(function() {
     //          2) is it fine that different spaceapi versions are handled asynchronously? => it seems so
 
 
-    $.getJSON('http://spaceapi.net/directory.json', {api: "<0.13"}, function(urls) {
+    $.getJSON('https://directory.spaceapi.net/', function(urls) {
         for (var name in urls) {
             $.getJSON(urls[name], function(data) {
                 if ( data.hasOwnProperty("lat") && data.hasOwnProperty("lon") && data.hasOwnProperty("open") ) {
