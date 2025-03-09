@@ -22,7 +22,7 @@ $(function() {
     //          1) does the Globe instance support multiple calls of createPoints()? => it seems so
 
 
-    $.getJSON('https://directory.spaceapi.net/', function(urls) {
+    $.getJSON('https://directory.spaceapi.io/', function(urls) {
         for (var name in urls) {
             $.getJSON(urls[name], function(data) {
                 var lat = 0;
